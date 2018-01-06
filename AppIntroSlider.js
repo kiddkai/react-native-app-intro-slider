@@ -92,7 +92,6 @@ export default class AppIntroSlider extends React.Component {
   }
 
   _renderPagination = () => {
-    // if (this.props.slides.length <= 1) return null;
     const isLastSlide = this.state.activeIndex === (this.props.slides.length - 1 );
 
     const skipBtn = !isLastSlide && this.props.showSkipButton && this._renderSkipButton();
@@ -153,8 +152,15 @@ export default class AppIntroSlider extends React.Component {
   }
 
   render() {
+    const { extraStyles } = this.props
+    const containerStyle = [styles.flexOne]
+
+    if (extraStyles) {
+      containerStyle.push(extraStyles)
+    }
+
     return (
-      <View style={styles.flexOne}>
+      <View style={containerStyle}>
         <FlatList
           ref={ref => this.flatList = ref}
           data={this.props.slides}
@@ -162,7 +168,7 @@ export default class AppIntroSlider extends React.Component {
           pagingEnabled
           showsHorizontalScrollIndicator={false}
           bounces={false}
-          style={styles.flexOne}
+          style={containerStyle}
           renderItem={this._renderItem}
           onMomentumScrollEnd={this._onMomentumScrollEnd}
           extraData={this.state.width}
